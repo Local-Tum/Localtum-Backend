@@ -1,12 +1,11 @@
-package com.homepage.localtum.domain.Member.entity;
+package com.homepage.localtum.domain.member.entity;
 
 
-import com.homepage.localtum.domain.Member.dto.SignUpDto;
+import com.homepage.localtum.domain.member.dto.SignUpDto;
 import com.homepage.localtum.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

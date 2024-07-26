@@ -1,14 +1,13 @@
-package com.homepage.localtum.domain.Member.service;
+package com.homepage.localtum.domain.member.service;
 
-import com.homepage.localtum.domain.Member.dto.SignInReqDto;
-import com.homepage.localtum.domain.Member.dto.SignInResDto;
-import com.homepage.localtum.domain.Member.dto.SignUpDto;
-import com.homepage.localtum.domain.Member.entity.Member;
-import com.homepage.localtum.domain.Member.entity.MemberRole;
-import com.homepage.localtum.domain.Member.entity.Role;
-import com.homepage.localtum.domain.Member.entity.RoleName;
-import com.homepage.localtum.domain.Member.repository.MemberRepository;
-import com.homepage.localtum.domain.Member.repository.RoleRepository;
+import com.homepage.localtum.domain.member.dto.SignInReqDto;
+import com.homepage.localtum.domain.member.dto.SignUpDto;
+import com.homepage.localtum.domain.member.entity.Member;
+import com.homepage.localtum.domain.member.entity.MemberRole;
+import com.homepage.localtum.domain.member.entity.Role;
+import com.homepage.localtum.domain.member.entity.RoleName;
+import com.homepage.localtum.domain.member.repository.MemberRepository;
+import com.homepage.localtum.domain.member.repository.RoleRepository;
 import com.homepage.localtum.global.security.jwt.JwtTokenProvider;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import jakarta.transaction.Transactional;
