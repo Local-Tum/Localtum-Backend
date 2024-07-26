@@ -24,7 +24,4 @@ public class Cafe {
     @Column(name = "menu", nullable = false)
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> menu;
-
-
-
 }

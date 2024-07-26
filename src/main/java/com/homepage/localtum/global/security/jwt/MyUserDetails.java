@@ -1,7 +1,7 @@
 package com.homepage.localtum.global.security.jwt;
 
-import com.homepage.localtum.domain.Member.entity.Member;
-import com.homepage.localtum.domain.Member.repository.MemberRepository;
+import com.homepage.localtum.domain.member.entity.Member;
+import com.homepage.localtum.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

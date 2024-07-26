@@ -1,7 +1,5 @@
 package com.homepage.localtum.global.security.jwt;
 
-import com.homepage.localtum.domain.Member.entity.Role;
-import com.homepage.localtum.global.security.jwt.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;

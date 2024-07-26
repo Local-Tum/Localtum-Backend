@@ -24,6 +24,7 @@ public class CafeController {
         ResponseEntity<CustomApiResponse<?>> result = cafeService.createCafe(dto);
         return result;
     }
+
     @GetMapping("/{cafe_name}")
     public ResponseEntity<CustomApiResponse<?>> getCafeById(@PathVariable("cafe_name") String cafeName){
         ResponseEntity<CustomApiResponse<?>> result =cafeService.getCafeById(cafeName);

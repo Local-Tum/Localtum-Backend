@@ -1,6 +1,6 @@
-package com.homepage.localtum.domain.Member.repository;
+package com.homepage.localtum.domain.member.repository;
 
-import com.homepage.localtum.domain.Member.entity.Member;
+import com.homepage.localtum.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
