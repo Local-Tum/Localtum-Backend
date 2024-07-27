@@ -1,13 +1,12 @@
-package com.homepage.localtum.domain.cafe_details.service;
+package com.homepage.localtum.cafe_details.service;
 
-import com.homepage.localtum.domain.cafe_details.dto.CreateCafeDto;
-import com.homepage.localtum.domain.cafe_details.dto.GetCafeDetailsDto;
-import com.homepage.localtum.domain.cafe_details.entitiy.Cafe;
-import com.homepage.localtum.domain.cafe_details.repository.CafeRepository;
+import com.homepage.localtum.cafe_details.dto.CreateCafeDto;
+import com.homepage.localtum.cafe_details.dto.GetCafeDetailsDto;
+import com.homepage.localtum.domain.Cafe;
+import com.homepage.localtum.cafe_details.repository.CafeRepository;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.homepage.localtum;
 
-import com.homepage.localtum.domain.cafe_details.entitiy.Cafe;
-import com.homepage.localtum.domain.cafe_details.repository.CafeRepository;
+import com.homepage.localtum.domain.Cafe;
+import com.homepage.localtum.cafe_details.repository.CafeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

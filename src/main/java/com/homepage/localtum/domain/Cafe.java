@@ -1,4 +1,4 @@
-package com.homepage.localtum.domain.cafe_details.entitiy;
+package com.homepage.localtum.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,4 +24,6 @@ public class Cafe {
     @Column(name = "menu", nullable = false)
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> menu;
+
+    private String address;
 }
