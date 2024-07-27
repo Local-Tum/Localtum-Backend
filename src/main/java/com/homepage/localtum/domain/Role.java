@@ -1,4 +1,4 @@
-package com.homepage.localtum.domain.member.entity;
+package com.homepage.localtum.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

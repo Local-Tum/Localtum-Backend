@@ -1,7 +1,7 @@
-package com.homepage.localtum.domain.member.repository;
+package com.homepage.localtum.member.repository;
 
-import com.homepage.localtum.domain.member.entity.Role;
-import com.homepage.localtum.domain.member.entity.RoleName;
+import com.homepage.localtum.domain.Role;
+import com.homepage.localtum.domain.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.homepage.localtum.domain.cafe_details.dto;
+package com.homepage.localtum.cafe_details.dto;
 
-import com.homepage.localtum.domain.cafe_details.entitiy.Cafe;
+import com.homepage.localtum.domain.Cafe;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.FetchType;
 import jakarta.validation.constraints.NotBlank;

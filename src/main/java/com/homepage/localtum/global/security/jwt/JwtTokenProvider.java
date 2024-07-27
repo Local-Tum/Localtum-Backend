@@ -1,6 +1,6 @@
 package com.homepage.localtum.global.security.jwt;
 
-import com.homepage.localtum.domain.member.entity.Role;
+import com.homepage.localtum.domain.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;

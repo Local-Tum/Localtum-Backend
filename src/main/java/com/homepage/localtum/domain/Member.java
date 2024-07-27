@@ -1,7 +1,7 @@
-package com.homepage.localtum.domain.member.entity;
+package com.homepage.localtum.domain;
 
 
-import com.homepage.localtum.domain.member.dto.SignUpDto;
+import com.homepage.localtum.member.dto.SignUpDto;
 import com.homepage.localtum.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

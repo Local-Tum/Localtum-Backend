@@ -1,8 +1,8 @@
 package com.homepage.localtum.util.init;
 
-import com.homepage.localtum.domain.member.entity.Role;
-import com.homepage.localtum.domain.member.entity.RoleName;
-import com.homepage.localtum.domain.member.repository.RoleRepository;
+import com.homepage.localtum.domain.Role;
+import com.homepage.localtum.domain.RoleName;
+import com.homepage.localtum.member.repository.RoleRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

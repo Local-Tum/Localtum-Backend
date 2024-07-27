@@ -1,8 +1,8 @@
-package com.homepage.localtum.domain.member.controller;
+package com.homepage.localtum.member.controller;
 
-import com.homepage.localtum.domain.member.dto.SignInReqDto;
-import com.homepage.localtum.domain.member.dto.SignUpDto;
-import com.homepage.localtum.domain.member.service.MemberService;
+import com.homepage.localtum.member.dto.SignInReqDto;
+import com.homepage.localtum.member.dto.SignUpDto;
+import com.homepage.localtum.member.service.MemberService;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

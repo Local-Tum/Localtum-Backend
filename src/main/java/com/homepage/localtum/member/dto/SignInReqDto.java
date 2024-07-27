@@ -1,4 +1,4 @@
-package com.homepage.localtum.domain.member.dto;
+package com.homepage.localtum.member.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
