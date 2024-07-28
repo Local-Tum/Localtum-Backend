@@ -14,5 +14,8 @@ public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String cafe_name;
+    private int Coupon_description;
+    private String Member_name;
 
 }
