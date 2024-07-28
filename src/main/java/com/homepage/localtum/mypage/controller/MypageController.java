@@ -23,10 +23,11 @@ public class MypageController {
 
     // 회원 정보 수정
     @PutMapping("/user")
-    public ResponseEntity<CustomApiResponse<Member>> updateNickname(@RequestBody UpdateNicknameDto dto) {
+    public ResponseEntity<CustomApiResponse<String>> updateNickname(@RequestBody UpdateNicknameDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         Member member = mypageService.updateNickname(currentMemberId, dto.getNickname());
-        CustomApiResponse<Member> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), member, "닉네임이 수정되었습니다.");
+        String updatedNickname = member.getNickname();
+        CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), updatedNickname, "닉네임이 수정되었습니다.");
         return ResponseEntity.ok(response);
     }
 }
