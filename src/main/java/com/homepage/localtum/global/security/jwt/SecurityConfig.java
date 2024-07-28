@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((session) ->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/localTum/signUp", "/localTum/signIn","/localtum/cafe_details","/localtum/cafe_details/{cafe_name}", "/localTum/recommend",
+                        .requestMatchers("/localtum/signUp", "/localtum/signIn","/localtum/cafe_details","/localtum/cafe_details/{cafe_name}", "/localTum/recommend",
                                 "/localtum/**").permitAll()
                         .anyRequest().hasAnyAuthority("ROLE_ADMIN")
                 )

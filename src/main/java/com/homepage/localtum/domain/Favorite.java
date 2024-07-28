@@ -15,7 +15,11 @@ public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String cafeName;
     private String userName;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }

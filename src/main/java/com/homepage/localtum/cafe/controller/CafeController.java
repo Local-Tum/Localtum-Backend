@@ -1,9 +1,12 @@
 package com.homepage.localtum.cafe.controller;
 
 import com.homepage.localtum.cafe.dto.CreateCafeDto;
+import com.homepage.localtum.cafe.repository.CafeRepository;
 import com.homepage.localtum.cafe.service.CafeService;
 import com.homepage.localtum.domain.Cafe;
+import com.homepage.localtum.util.Member.AuthenticationMemberUtils;
 import com.homepage.localtum.util.response.CustomApiResponse;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +20,9 @@ import java.util.List;
 public class CafeController {
 
     private final CafeService cafeService;
+    private final AuthenticationMemberUtils memberUtils;
 
-
+    @Transactional
     @PostMapping("/cafe_details")
     public ResponseEntity<CustomApiResponse<?>> createCafe(@Valid @RequestBody CreateCafeDto dto){
         ResponseEntity<CustomApiResponse<?>> result = cafeService.createCafe(dto);
