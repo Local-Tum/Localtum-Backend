@@ -1,7 +1,7 @@
-package com.homepage.localtum.cafe_details.controller;
+package com.homepage.localtum.cafe.controller;
 
-import com.homepage.localtum.cafe_details.dto.CreateCafeDto;
-import com.homepage.localtum.cafe_details.service.CafeService;
+import com.homepage.localtum.cafe.dto.CreateCafeDto;
+import com.homepage.localtum.cafe.service.CafeService;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

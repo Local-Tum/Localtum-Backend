@@ -1,4 +1,4 @@
-package com.homepage.localtum.cafe_details.dto;
+package com.homepage.localtum.cafe.dto;
 
 import lombok.*;
 

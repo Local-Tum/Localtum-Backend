@@ -1,9 +1,9 @@
-package com.homepage.localtum.cafe_details.service;
+package com.homepage.localtum.cafe.service;
 
-import com.homepage.localtum.cafe_details.dto.CreateCafeDto;
-import com.homepage.localtum.cafe_details.dto.GetCafeDetailsDto;
+import com.homepage.localtum.cafe.dto.CreateCafeDto;
+import com.homepage.localtum.cafe.dto.GetCafeDetailsDto;
 import com.homepage.localtum.domain.Cafe;
-import com.homepage.localtum.cafe_details.repository.CafeRepository;
+import com.homepage.localtum.cafe.repository.CafeRepository;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

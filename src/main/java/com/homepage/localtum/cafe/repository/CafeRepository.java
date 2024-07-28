@@ -1,4 +1,4 @@
-package com.homepage.localtum.cafe_details.repository;
+package com.homepage.localtum.cafe.repository;
 
 import com.homepage.localtum.domain.Cafe;
 import org.springframework.data.jpa.repository.JpaRepository;
