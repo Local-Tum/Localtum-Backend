@@ -53,5 +53,11 @@ public class Member extends BaseEntity {
         member.memberRoles = memberRoles;
 
         return member;
+    }
 
-}}
+    // 닉네임 업데이트 메서드
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+}
+
