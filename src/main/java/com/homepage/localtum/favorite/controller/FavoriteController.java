@@ -31,7 +31,7 @@ public class FavoriteController {
 
     // 즐겨찾기 조회
     @GetMapping("/lists")
-    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@RequestBody String username) {
+    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName() {
         String currentMemberId = memberUtils.getCurrentMemberId();
         List<Favorite> favorites = favoriteService.getFavoritesByUserName(currentMemberId);
         CustomApiResponse<List<Favorite>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorites, "즐겨찾기 목록 조회 성공");
