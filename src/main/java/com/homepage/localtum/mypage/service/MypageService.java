@@ -14,7 +14,7 @@ import java.util.Optional;
 public class MypageService {
     private final MemberRepository memberRepository;
 
-
+    @Transactional
     public Member updateNickname(String memberId, String nickname) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
@@ -23,9 +23,8 @@ public class MypageService {
         }
 
         Member member = optionalMember.get();
-
-//        member.updateNickname(nickname);
-        return memberRepository.save(member.updateNickname(nickname));
+        member.updateNickname(nickname);
+        return memberRepository.save(member);
     }
 
 
