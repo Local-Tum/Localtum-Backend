@@ -20,6 +20,7 @@ public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
     private final MemberRepository memberRepository;
     private final CafeRepository cafeRepository;
+
     public Favorite addFavorite(String memberId, String cafeName) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
         if (optionalMember.isEmpty()) {

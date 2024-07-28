@@ -29,7 +29,7 @@ public class FavoriteController {
         return ResponseEntity.ok(response);
     }
 
-    // 즐겨찾기 조회 
+    // 즐겨찾기 조회
     @GetMapping("/search/like/{userName}")
     public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@PathVariable String userName) {
         List<Favorite> favorites = favoriteService.getFavoritesByUserName(userName);
