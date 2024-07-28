@@ -2,7 +2,6 @@ package com.homepage.localtum.favorite.service;
 
 import com.homepage.localtum.domain.Favorite;
 import com.homepage.localtum.favorite.repository.FavoriteRepository;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FavoriteService {
 
-    private FavoriteRepository favoriteRepository;
+    private final FavoriteRepository favoriteRepository;
 
     public Favorite addFavorite(Long userId, Long cafeId) {
         Favorite favorite = Favorite.builder()

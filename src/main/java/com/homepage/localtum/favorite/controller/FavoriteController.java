@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FavoriteController {
 
-    private FavoriteService favoriteService;
+    private final FavoriteService favoriteService;
 
     // 즐겨찾기 등록
     @PostMapping
