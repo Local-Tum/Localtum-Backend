@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/localtum/search/like")
+@RequestMapping("/localtum")
 @RequiredArgsConstructor
 public class FavoriteController {
 
@@ -21,26 +21,28 @@ public class FavoriteController {
     private final AuthenticationMemberUtils memberUtils;
 
     // 즐겨찾기 등록
-    @PostMapping
+    @PostMapping("/search/like")
     public ResponseEntity<CustomApiResponse<Favorite>> addFavorite(@RequestBody AddFavoriteDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         Favorite favorite = favoriteService.addFavorite(currentMemberId, dto.getCafeName());
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
         return ResponseEntity.ok(response);
     }
-    @RequestMapping("localtum/cafe_details/{cafe_name}")
-    @PostMapping("/like")
+
+    // 즐겨찾기 조회
+    @GetMapping("/search/like/{userName}")
+    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@PathVariable String userName) {
+        List<Favorite> favorites = favoriteService.getFavoritesByUserName(userName);
+        CustomApiResponse<List<Favorite>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorites, "즐겨찾기 목록 조회 성공");
+        return ResponseEntity.ok(response);
+    }
+
+    // 상세정보 - 즐겨찾기
+    @PostMapping("/cafe_details/{cafe_name}/like")
     public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name")@RequestBody String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         Favorite favorite = favoriteService.addFavorite(currentMemberId, cafename);
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
-        return ResponseEntity.ok(response);
-    }
-    // 즐겨찾기 조회
-    @GetMapping("/{userName}")
-    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@PathVariable String userName) {
-        List<Favorite> favorites = favoriteService.getFavoritesByUserName(userName);
-        CustomApiResponse<List<Favorite>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorites, "즐겨찾기 목록 조회 성공");
         return ResponseEntity.ok(response);
     }
 }
