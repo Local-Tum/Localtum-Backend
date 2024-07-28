@@ -24,6 +24,9 @@ public class Cafe {
     @Column(name = "menu", nullable = false)
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> menu;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     private String address;
 }

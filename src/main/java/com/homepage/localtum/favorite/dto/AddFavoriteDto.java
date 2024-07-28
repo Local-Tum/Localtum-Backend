@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AddFavoriteDto {
-    private String userName;
+
     private String cafeName;
+    private Long memberId;
 }

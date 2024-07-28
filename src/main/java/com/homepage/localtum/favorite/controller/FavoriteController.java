@@ -3,6 +3,7 @@ package com.homepage.localtum.favorite.controller;
 import com.homepage.localtum.domain.Favorite;
 import com.homepage.localtum.favorite.dto.AddFavoriteDto;
 import com.homepage.localtum.favorite.service.FavoriteService;
+import com.homepage.localtum.util.Member.AuthenticationMemberUtils;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,18 +18,21 @@ import java.util.List;
 public class FavoriteController {
 
     private final FavoriteService favoriteService;
+    private final AuthenticationMemberUtils memberUtils;
 
     // 즐겨찾기 등록
     @PostMapping
     public ResponseEntity<CustomApiResponse<Favorite>> addFavorite(@RequestBody AddFavoriteDto dto) {
-        Favorite favorite = favoriteService.addFavorite(dto.getUserName(), dto.getCafeName());
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        Favorite favorite = favoriteService.addFavorite(currentMemberId, dto.getCafeName());
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
         return ResponseEntity.ok(response);
     }
     @RequestMapping("localtum/cafe_details/{cafe_name}")
     @PostMapping("/like")
-    public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name")@RequestBody String cafename,AddFavoriteDto dto) {
-        Favorite favorite = favoriteService.addFavorite(dto.getUserName(), cafename);
+    public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name")@RequestBody String cafename) {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        Favorite favorite = favoriteService.addFavorite(currentMemberId, cafename);
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
         return ResponseEntity.ok(response);
     }
