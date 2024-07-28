@@ -21,15 +21,15 @@ public class FavoriteController {
     // 즐겨찾기 등록
     @PostMapping
     public ResponseEntity<CustomApiResponse<Favorite>> addFavorite(@RequestBody AddFavoriteDto dto) {
-        Favorite favorite = favoriteService.addFavorite(dto.getUserId(), dto.getCafeId());
+        Favorite favorite = favoriteService.addFavorite(dto.getUserName(), dto.getCafeName());
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
         return ResponseEntity.ok(response);
     }
 
     // 즐겨찾기 조회
-    @GetMapping("/{userId}")
-    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserId(@PathVariable Long userId) {
-        List<Favorite> favorites = favoriteService.getFavoritesByUserId(userId);
+    @GetMapping("/{userName}")
+    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@PathVariable String userName) {
+        List<Favorite> favorites = favoriteService.getFavoritesByUserName(userName);
         CustomApiResponse<List<Favorite>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorites, "즐겨찾기 목록 조회 성공");
         return ResponseEntity.ok(response);
     }

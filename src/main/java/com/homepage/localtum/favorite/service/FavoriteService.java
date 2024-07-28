@@ -13,15 +13,15 @@ public class FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
 
-    public Favorite addFavorite(Long userId, Long cafeId) {
+    public Favorite addFavorite(String userName, String cafeName) {
         Favorite favorite = Favorite.builder()
-                .userId(userId)
-                .cafeId(cafeId)
+                .userName(userName)
+                .cafeName(cafeName)
                 .build();
         return favoriteRepository.save(favorite);
     }
 
-    public List<Favorite> getFavoritesByUserId(Long userId) {
-        return favoriteRepository.findByUserId(userId);
+    public List<Favorite> getFavoritesByUserName(String userName) {
+        return favoriteRepository.findByUserName(userName);
     }
 }
