@@ -30,7 +30,7 @@ public class FavoriteController {
     }
 
     // 즐겨찾기 조회
-    @GetMapping("/lists")
+    @GetMapping("/search/like")
     public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName() {
         String currentMemberId = memberUtils.getCurrentMemberId();
         List<Favorite> favorites = favoriteService.getFavoritesByUserName(currentMemberId);
