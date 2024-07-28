@@ -30,9 +30,10 @@ public class FavoriteController {
     }
 
     // 즐겨찾기 조회
-    @GetMapping("/search/like/{userName}")
-    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@PathVariable String userName) {
-        List<Favorite> favorites = favoriteService.getFavoritesByUserName(userName);
+    @GetMapping("/lists")
+    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@RequestBody String username) {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        List<Favorite> favorites = favoriteService.getFavoritesByUserName(currentMemberId);
         CustomApiResponse<List<Favorite>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorites, "즐겨찾기 목록 조회 성공");
         return ResponseEntity.ok(response);
     }

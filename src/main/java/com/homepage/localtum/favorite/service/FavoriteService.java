@@ -37,6 +37,13 @@ public class FavoriteService {
     }
 
     public List<Favorite> getFavoritesByUserName(String userName) {
-        return favoriteRepository.findByUserName(userName);
+        Optional<Member> optionalMember = memberRepository.findByMemberId(userName);
+
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + userName + "인 회원은 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+
+        return favoriteRepository.findByUserName(member.getNickname());
     }
 }
