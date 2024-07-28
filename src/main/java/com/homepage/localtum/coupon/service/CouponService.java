@@ -14,12 +14,17 @@ import java.util.Optional;
 public class CouponService {
     private final CouponRepository couponRepository;
     private final MemberRepository memberRepository;
+
     public Coupon addCoupon(String memberId, String cafename, int description) {
+
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+
         if (optionalMember.isEmpty()) {
             throw new RuntimeException("아이디가 " + memberId + "인 회원은 존재하지 않습니다.");
         }
+
         Member member = optionalMember.get();
+
         Coupon coupon1 =Coupon.builder()
                 .cafe_name(cafename)
                 .Member_name(member.getNickname())

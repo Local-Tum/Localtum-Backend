@@ -7,17 +7,26 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MypageService {
     private final MemberRepository memberRepository;
 
-    @Transactional
-    public void updateNickname(UpdateNicknameDto dto) {
-        Member member = memberRepository.findById(dto.getId())
-                .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
 
-        member.updateNickname(dto.getNickname());
-        memberRepository.save(member);
+    public Member updateNickname(String memberId, String nickname) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + memberId + "인 회원은 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+//        member.updateNickname(nickname);
+        return memberRepository.save(member.updateNickname(nickname));
     }
+
+
 }

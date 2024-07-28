@@ -18,12 +18,14 @@ import java.util.List;
 @RequestMapping("/localtum/cafe_details/")
 @RequiredArgsConstructor
 public class CouponController {
+
     private final CouponService couponService;
     private final AuthenticationMemberUtils memberUtils;
+
     @PostMapping("/{cafe_name}/coupon")
     public ResponseEntity<CustomApiResponse<?>> createCoupon(@PathVariable("cafe_name") String cafename, @RequestBody AddCouponDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-       Coupon coupon = couponService.addCoupon(currentMemberId,cafename, dto.getDescription());
+        Coupon coupon = couponService.addCoupon(currentMemberId,cafename, dto.getDescription());
         CustomApiResponse<Coupon> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(),coupon,"쿠폰이 적립되었습니다");
         return ResponseEntity.ok().body(response);
     }
