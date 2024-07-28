@@ -25,7 +25,13 @@ public class FavoriteController {
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
         return ResponseEntity.ok(response);
     }
-
+    @RequestMapping("localtum/cafe_details/{cafe_name}")
+    @PostMapping("/like")
+    public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name")@RequestBody String cafename,AddFavoriteDto dto) {
+        Favorite favorite = favoriteService.addFavorite(dto.getUserName(), cafename);
+        CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
+        return ResponseEntity.ok(response);
+    }
     // 즐겨찾기 조회
     @GetMapping("/{userName}")
     public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName(@PathVariable String userName) {
