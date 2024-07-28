@@ -1,9 +1,9 @@
-package com.homepage.localtum.cafe_details.service;
+package com.homepage.localtum.cafe.service;
 
-import com.homepage.localtum.cafe_details.dto.CreateCafeDto;
-import com.homepage.localtum.cafe_details.dto.GetCafeDetailsDto;
+import com.homepage.localtum.cafe.dto.CreateCafeDto;
+import com.homepage.localtum.cafe.dto.GetCafeDetailsDto;
 import com.homepage.localtum.domain.Cafe;
-import com.homepage.localtum.cafe_details.repository.CafeRepository;
+import com.homepage.localtum.cafe.repository.CafeRepository;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Builder
 public class CafeService {
+
     public final CafeRepository cafeRepository;
 
     public ResponseEntity<CustomApiResponse<?>> createCafe(CreateCafeDto dto){
@@ -27,6 +28,7 @@ public class CafeService {
         CustomApiResponse<CreateCafeDto> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null,"데이터가 저장되었습니다");
         return ResponseEntity.ok(result);
     }
+
     public ResponseEntity<CustomApiResponse<?>> getCafeById(String cafeName){
         Optional<Cafe> cafe = cafeRepository.findByName(cafeName);
         if(cafe.isEmpty()){
@@ -42,5 +44,13 @@ public class CafeService {
         );
         CustomApiResponse<GetCafeDetailsDto> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), caferesponse ,"성공적으로 조회되었습니다.");
         return ResponseEntity.ok(response);
+    }
+
+    public List<Cafe> getAllCafes() {
+        return cafeRepository.findAll();
+    }
+
+    public Cafe getCafeById(Long id) {
+        return cafeRepository.findById(id).orElse(null);
     }
 }

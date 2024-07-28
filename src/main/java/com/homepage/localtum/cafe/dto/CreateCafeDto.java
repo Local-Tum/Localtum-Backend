@@ -1,4 +1,4 @@
-package com.homepage.localtum.cafe_details.dto;
+package com.homepage.localtum.cafe.dto;
 
 import com.homepage.localtum.domain.Cafe;
 import jakarta.persistence.ElementCollection;
@@ -15,8 +15,12 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class CreateCafeDto {
+
     @NotBlank(message = "카페이름을 입력해주세요")
     private String name;
+
+    private String address;
+
     @NotNull
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> menu;
@@ -24,6 +28,7 @@ public class CreateCafeDto {
         return Cafe.builder()
                 .name(name)
                 .menu(menu)
+                .address(address)
                 .build();
     }
 }
