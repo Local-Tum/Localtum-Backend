@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/localTum")
+@RequestMapping("/localtum")
 @RequiredArgsConstructor
 public class RecommendController {
 
