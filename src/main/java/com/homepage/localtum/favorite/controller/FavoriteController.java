@@ -64,4 +64,13 @@ public class FavoriteController {
         CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null,"즐겨찾기가 삭제되었습니다.");
         return ResponseEntity.ok(response);
     }
+
+    // 마이페이지 - 즐겨찾기 조회
+    @GetMapping("/mypage/like_list")
+    public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesMyPage() {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        List<Favorite> favorites = favoriteService.getFavoritesMyPage(currentMemberId);
+        CustomApiResponse<List<Favorite>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorites, "즐겨찾기 목록 조회 성공");
+        return ResponseEntity.ok(response);
+    }
 }

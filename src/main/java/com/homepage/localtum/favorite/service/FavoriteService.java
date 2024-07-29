@@ -81,4 +81,16 @@ public class FavoriteService {
 
         favoriteRepository.delete(favorite.get());
     }
+
+    // 마이페이지 즐겨찾기 조회
+    public List<Favorite> getFavoritesMyPage(String userName) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(userName);
+
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + userName + "인 회원은 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+
+        return favoriteRepository.findByUserName(member.getNickname());
+    }
 }
