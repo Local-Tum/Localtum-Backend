@@ -12,14 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
     private final MemberRepository memberRepository;
-    private final CafeRepository cafeRepository;
 
     // 검색 - 즐겨찾기 등록
     public Favorite addFavorite(String memberId, String cafeName) {
@@ -33,12 +31,13 @@ public class FavoriteService {
         Favorite favorite = Favorite.builder()
                 .userName(member.getNickname())
                 .cafeName(cafeName)
+                .source("search")  // Mark as added from search
                 .build();
         return favoriteRepository.save(favorite);
     }
 
     // 검색 - 즐겨찾기 조회
-    public List<Favorite> getFavoritesByUserName(String userName) {
+    public List<Favorite> getFavoritesByUserNameAndSource(String userName, String source) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(userName);
 
         if (optionalMember.isEmpty()) {
@@ -46,7 +45,24 @@ public class FavoriteService {
         }
         Member member = optionalMember.get();
 
-        return favoriteRepository.findByUserName(member.getNickname());
+        return favoriteRepository.findByUserNameAndSource(member.getNickname(), source);
+    }
+
+    // 상세정보 - 즐겨찾기 등록
+    public Favorite addFavoriteCafe(String memberId, String cafeName) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + memberId + "인 회원은 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        Favorite favorite = Favorite.builder()
+                .userName(member.getNickname())
+                .cafeName(cafeName)
+                .source("details")  // Mark as added from details
+                .build();
+        return favoriteRepository.save(favorite);
     }
 
     // 상세정보 - 즐겨찾기 삭제
@@ -80,5 +96,17 @@ public class FavoriteService {
         }
 
         favoriteRepository.delete(favorite.get());
+    }
+
+    // 마이페이지 즐겨찾기 조회
+    public List<Favorite> getFavoritesMyPage(String userName) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(userName);
+
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + userName + "인 회원은 존재하지 않습니다.");
+        }
+        Member member = optionalMember.get();
+
+        return favoriteRepository.findByUserName(member.getNickname());
     }
 }
