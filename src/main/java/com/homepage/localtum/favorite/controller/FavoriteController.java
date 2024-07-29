@@ -40,10 +40,10 @@ public class FavoriteController {
 
     // 검색 - 즐겨찾기 삭제
     @DeleteMapping("/search/like")
-    public ResponseEntity<CustomApiResponse<String>> deleteFavorite(@RequestBody String cafeName) {
+    public ResponseEntity<CustomApiResponse<Void>> searchDeleteFavorite(@RequestBody AddFavoriteDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        favoriteService.deleteFavorite(currentMemberId, cafeName);
-        CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null,"즐겨찾기가 삭제되었습니다.");
+        favoriteService.deleteFavorite(currentMemberId, dto.getCafeName());
+        CustomApiResponse<Void> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null, "즐겨찾기에서 삭제되었습니다");
         return ResponseEntity.ok(response);
     }
 
