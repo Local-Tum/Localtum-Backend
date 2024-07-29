@@ -9,5 +9,7 @@ import java.util.Optional;
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     List<Favorite> findByUserName(String userName);
 
+    List<Favorite> findByUserNameAndSource(String userName, String source);
+
     Optional<Favorite> findByUserNameAndCafeName(String nickname, String cafeName);
 }

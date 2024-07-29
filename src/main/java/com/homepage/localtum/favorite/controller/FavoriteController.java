@@ -33,7 +33,7 @@ public class FavoriteController {
     @GetMapping("/search/like")
     public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName() {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        List<Favorite> favorites = favoriteService.getFavoritesByUserName(currentMemberId);
+        List<Favorite> favorites = favoriteService.getFavoritesByUserNameAndSource(currentMemberId, "search");
         CustomApiResponse<List<Favorite>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorites, "즐겨찾기 목록 조회 성공");
         return ResponseEntity.ok(response);
     }
@@ -49,9 +49,9 @@ public class FavoriteController {
 
     // 상세정보 - 즐겨찾기 등록
     @PostMapping("/cafe_details/{cafe_name}/like")
-    public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name")@RequestBody String cafename) {
+    public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name") @RequestBody String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        Favorite favorite = favoriteService.addFavorite(currentMemberId, cafename);
+        Favorite favorite = favoriteService.addFavoriteCafe(currentMemberId, cafename);
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
         return ResponseEntity.ok(response);
     }
@@ -61,7 +61,7 @@ public class FavoriteController {
     public ResponseEntity<CustomApiResponse<String>> deleteFavoriteCafe(@PathVariable("cafe_name") String cafeName) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         favoriteService.deleteFavorite(currentMemberId, cafeName);
-        CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null,"즐겨찾기가 삭제되었습니다.");
+        CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null, "즐겨찾기가 삭제되었습니다.");
         return ResponseEntity.ok(response);
     }
 
@@ -74,3 +74,4 @@ public class FavoriteController {
         return ResponseEntity.ok(response);
     }
 }
+

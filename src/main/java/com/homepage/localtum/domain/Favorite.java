@@ -17,7 +17,11 @@ public class Favorite {
     private Long id;
 
     private String cafeName;
+
     private String userName;
+
+    private String source;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
