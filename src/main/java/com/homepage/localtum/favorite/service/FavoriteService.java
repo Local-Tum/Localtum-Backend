@@ -21,6 +21,7 @@ public class FavoriteService {
     private final MemberRepository memberRepository;
     private final CafeRepository cafeRepository;
 
+    // 검색 - 즐겨찾기 등록
     public Favorite addFavorite(String memberId, String cafeName) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
         if (optionalMember.isEmpty()) {
@@ -36,6 +37,7 @@ public class FavoriteService {
         return favoriteRepository.save(favorite);
     }
 
+    // 검색 - 즐겨찾기 조회
     public List<Favorite> getFavoritesByUserName(String userName) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(userName);
 
@@ -45,5 +47,22 @@ public class FavoriteService {
         Member member = optionalMember.get();
 
         return favoriteRepository.findByUserName(member.getNickname());
+    }
+
+    // 즐겨찾기 삭제
+    public void deleteFavorite(String memberId, String cafeName) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + memberId + "인 회원은 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+        Optional<Favorite> favorite = favoriteRepository.findByUserNameAndCafeName(member.getNickname(), cafeName);
+
+        if (favorite.isPresent()) {
+            favoriteRepository.delete(favorite.get());
+        } else {
+            throw new RuntimeException("즐겨찾기에 " + cafeName + "가 없습니다.");
+        }
     }
 }

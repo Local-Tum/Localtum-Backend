@@ -20,7 +20,7 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final AuthenticationMemberUtils memberUtils;
 
-    // 즐겨찾기 등록
+    // 검색 - 즐겨찾기 등록
     @PostMapping("/search/like")
     public ResponseEntity<CustomApiResponse<Favorite>> addFavorite(@RequestBody AddFavoriteDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
@@ -29,7 +29,7 @@ public class FavoriteController {
         return ResponseEntity.ok(response);
     }
 
-    // 즐겨찾기 조회
+    // 검색 - 즐겨찾기 조회
     @GetMapping("/search/like")
     public ResponseEntity<CustomApiResponse<List<Favorite>>> getFavoritesByUserName() {
         String currentMemberId = memberUtils.getCurrentMemberId();
@@ -38,12 +38,30 @@ public class FavoriteController {
         return ResponseEntity.ok(response);
     }
 
-    // 상세정보 - 즐겨찾기
+    // 검색 - 즐겨찾기 삭제
+    @DeleteMapping("/search/like")
+    public ResponseEntity<CustomApiResponse<String>> deleteFavorite(@RequestBody String cafeName) {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        favoriteService.deleteFavorite(currentMemberId, cafeName);
+        CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null,"즐겨찾기가 삭제되었습니다.");
+        return ResponseEntity.ok(response);
+    }
+
+    // 상세정보 - 즐겨찾기 등록
     @PostMapping("/cafe_details/{cafe_name}/like")
     public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name")@RequestBody String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         Favorite favorite = favoriteService.addFavorite(currentMemberId, cafename);
         CustomApiResponse<Favorite> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), favorite, "즐겨찾기에 추가되었습니다");
+        return ResponseEntity.ok(response);
+    }
+
+    // 상세정보 - 즐겨찾기 삭제
+    @DeleteMapping("/cafe_details/{cafe_name}/like")
+    public ResponseEntity<CustomApiResponse<String>> deleteFavoriteCafe(@PathVariable("cafe_name") String cafeName) {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        favoriteService.deleteFavorite(currentMemberId, cafeName);
+        CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), null,"즐겨찾기가 삭제되었습니다.");
         return ResponseEntity.ok(response);
     }
 }
