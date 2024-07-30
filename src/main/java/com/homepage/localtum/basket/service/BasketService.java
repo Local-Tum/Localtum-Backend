@@ -2,6 +2,7 @@ package com.homepage.localtum.basket.service;
 
 import com.homepage.localtum.basket.dto.AddbasketDto;
 import com.homepage.localtum.basket.repository.BasketRepository;
+import com.homepage.localtum.domain.Basket;
 import com.homepage.localtum.domain.Member;
 import com.homepage.localtum.domain.Order;
 import com.homepage.localtum.member.repository.MemberRepository;
@@ -27,7 +28,7 @@ public class BasketService {
             throw new RuntimeException("아이디가 " + memberId + "인 회원은 존재하지 않습니다.");
         }
         Member member = optionalMember.get();
-        Order order = Order.builder()
+        Basket basket = Basket.builder()
                 .member(member.getNickname())
                 .orderMemu(menu)
                 .size(dto.getSize())
@@ -36,8 +37,8 @@ public class BasketService {
                 .prices(dto.getPrices())
                 .cafename(cafename)
                 .build();
-        Order savedOrder = basketRepository.save(order);
-        CustomApiResponse<Order> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(),savedOrder ,"데이터가 저장되었습니다");
+        Basket savedBasket = basketRepository.save(basket);
+        CustomApiResponse<Basket> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(),savedBasket ,"데이터가 저장되었습니다");
         return ResponseEntity.ok(result);
     }
 }
