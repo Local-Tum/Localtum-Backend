@@ -2,13 +2,11 @@ package com.homepage.localtum.order.service;
 
 import com.homepage.localtum.basket.repository.BasketRepository;
 import com.homepage.localtum.coupon.repository.CouponRepository;
-import com.homepage.localtum.domain.Basket;
-import com.homepage.localtum.domain.Coupon;
-import com.homepage.localtum.domain.Member;
-import com.homepage.localtum.domain.Order;
+import com.homepage.localtum.domain.*;
 import com.homepage.localtum.member.repository.MemberRepository;
 import com.homepage.localtum.order.dto.AddCoupon;
 import com.homepage.localtum.order.repository.OrderRepository;
+import com.homepage.localtum.stamp.StampRepository;
 import com.homepage.localtum.util.response.CustomApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final BasketRepository basketRepository;
     private final MemberRepository memberRepository;
+    private final StampRepository stampRepository;
+    private final CouponRepository couponRepository;
     public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename, String menuname, int des) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
@@ -58,7 +58,24 @@ public class OrderService {
 
         // 주문 후 장바구니 비우기
         basketRepository.deleteAll(baskets);
+        Optional<Stamp> optionalStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
 
+        // 스탬프 관리
+        Optional<Stamp> optioStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
+        Stamp stamp;
+        if (optioStamp.isPresent()) {
+            stamp = optionalStamp.get();
+            stamp.addStamps(orders.size(), couponRepository);
+        } else {
+            stamp = Stamp.builder()
+                    .memberId(memberId)
+                    .cafename(cafename)
+                    .stampCount(orders.size())
+                    .couponIssued(false)
+                    .build();
+            stamp.addStamps(0, couponRepository); // 초기 스탬프 추가
+        }
+        stampRepository.save(stamp);
         CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(),orders,"주문이 완료되었습니다");
         return ResponseEntity.ok(result);
     }
