@@ -23,7 +23,7 @@ public class OrderService {
     private final BasketRepository basketRepository;
     private final MemberRepository memberRepository;
 
-    public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename) {
+    public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename,String menuname) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
         if (optionalMember.isEmpty()) {
@@ -33,7 +33,7 @@ public class OrderService {
         Member member = optionalMember.get();
 
         // 회원의 장바구니 아이템을 모두 가져와서 주문으로 이동
-        List<Basket> baskets = basketRepository.findByMemberAndCafename(member.getNickname(), cafename);
+        List<Basket> baskets = basketRepository.findByMemberAndCafenameAndBasketMenu(member.getNickname(), cafename,menuname);
         if (baskets.isEmpty()) {
             throw new RuntimeException("주문할 장바구니 항목이 없습니다.");
         }
@@ -41,7 +41,7 @@ public class OrderService {
         for (Basket basket : baskets) {
             Order order = Order.builder()
                     .member(member.getNickname())
-                    .orderMemu(basket.getOrderMemu())
+                    .orderMenu(basket.getBasketMenu())
                     .size(basket.getSize())
                     .options(new ArrayList<>(basket.getOptions()))
                     .status(basket.getStatus())

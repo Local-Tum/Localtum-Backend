@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AddbasketDto {
-    private String menu;
+
     @NotBlank
     private String size;
     @NotBlank

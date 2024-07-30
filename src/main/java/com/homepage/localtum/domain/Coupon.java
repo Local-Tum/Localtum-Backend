@@ -16,6 +16,6 @@ public class Coupon {
     private Long id;
     private String cafe_name;
     private int Coupon_description;
-    private String Member_name;
+    private String memberName;
 
 }

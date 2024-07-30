@@ -2,6 +2,7 @@ package com.homepage.localtum.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.bind.annotation.Mapping;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Order {
     private Long id;
 
     @Column(name = "menu", nullable = false)
-    private String orderMemu;
+    private String orderMenu;
 
     @Column(name = "price", nullable = false)
     private int prices;

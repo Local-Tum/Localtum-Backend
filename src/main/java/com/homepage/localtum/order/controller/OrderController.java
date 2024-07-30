@@ -25,7 +25,7 @@ public class OrderController {
     @PostMapping("/{menu_name}/order")
     public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename);
+        ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename,menu_name);
         return result;
     }
 }
