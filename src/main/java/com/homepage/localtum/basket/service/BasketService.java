@@ -21,7 +21,7 @@ import java.util.Optional;
 public class BasketService {
     private final BasketRepository basketRepository;
     private final MemberRepository memberRepository;
-    public ResponseEntity<CustomApiResponse<?>> createBasket(String memberId,String cafename,String menu, AddbasketDto dto) {
+    public ResponseEntity<CustomApiResponse<?>> createBasket(String memberId,String cafename,String basketMenu, AddbasketDto dto) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
         if (optionalMember.isEmpty()) {
@@ -30,7 +30,7 @@ public class BasketService {
         Member member = optionalMember.get();
         Basket basket = Basket.builder()
                 .member(member.getNickname())
-                .orderMemu(menu)
+                .basketMenu(basketMenu)
                 .size(dto.getSize())
                 .options(dto.getOptions())
                 .status(dto.getStatus())

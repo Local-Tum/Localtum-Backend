@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AddOrderDto {
-    private String menu;
     @NotBlank
     private String size;
     @NotBlank

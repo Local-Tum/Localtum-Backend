@@ -16,8 +16,8 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "menu", nullable = false)
-    private String orderMemu;
+    @Column(name = "basketmenu", nullable = false)
+    private String basketMenu;
 
     @Column(name = "price", nullable = false)
     private int prices;

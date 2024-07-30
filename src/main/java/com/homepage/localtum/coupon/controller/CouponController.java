@@ -29,4 +29,10 @@ public class CouponController {
         CustomApiResponse<Coupon> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(),coupon,"쿠폰이 적립되었습니다");
         return ResponseEntity.ok().body(response);
     }
+    @GetMapping("/{cafe_name}/{menu_name}/order_coupon")
+    public ResponseEntity<CustomApiResponse<?>> getAllCoupons() {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        ResponseEntity<CustomApiResponse<?>> response =couponService.getAllCoupons(currentMemberId);
+        return  response;
+    }
 }
