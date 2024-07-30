@@ -4,14 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-
 @Entity
-@Table(name = "ORDERS")
+@Table(name = "BASKETS")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order {
+public class Basket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +23,8 @@ public class Order {
     private int prices;
 
     private String member;
-
     private String size;
-
     private String status;
-
     private String cafename;
 
     @ElementCollection(fetch = FetchType.LAZY)
