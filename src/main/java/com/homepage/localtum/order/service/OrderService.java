@@ -5,6 +5,7 @@ import com.homepage.localtum.coupon.repository.CouponRepository;
 import com.homepage.localtum.domain.*;
 import com.homepage.localtum.member.repository.MemberRepository;
 import com.homepage.localtum.order.dto.AddCoupon;
+import com.homepage.localtum.order.dto.AddOrderDto;
 import com.homepage.localtum.order.repository.OrderRepository;
 import com.homepage.localtum.stamp.StampRepository;
 import com.homepage.localtum.util.response.CustomApiResponse;
@@ -28,7 +29,7 @@ public class OrderService {
     private final CouponRepository couponRepository;
 
     // 장바구니 주문
-    public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename, String menuname, int des) {
+    public ResponseEntity<CustomApiResponse<?>> createOrderWithBasket(String memberId, String cafename, String menuname, int des) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
         if (optionalMember.isEmpty()) {
@@ -115,6 +116,46 @@ public class OrderService {
         }
 
         CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문 내역 조회 완료");
+        return ResponseEntity.ok(result);
+    }
+
+    public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename, String menuname, int des, AddOrderDto dto) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+
+        if (optionalMember.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(CustomApiResponse.createFailWithoutData(HttpStatus.NOT_FOUND.value(), "아이디가 " + memberId + "인 회원은 존재하지 않습니다."));
+        }
+
+        Member member = optionalMember.get();
+        List<Order> orders = new ArrayList<>();
+        Order order = Order.builder()
+                .member(member.getNickname())
+                .orderMenu(menuname)
+                .size(dto.getSize())
+                .options(new ArrayList<>(dto.getOptions()))
+                .status(dto.getStatus())
+                .prices(dto.getPrices() - des)
+                .cafename(cafename)
+                .build();
+        Order savedOrder = orderRepository.save(order);
+        orders.add(savedOrder);
+        Optional<Stamp> optionalStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
+        Stamp stamp;
+        if (optionalStamp.isPresent()) {
+            stamp = optionalStamp.get();
+            stamp.addStamps(orders.size(), couponRepository);
+        } else {
+            stamp = Stamp.builder()
+                    .memberId(memberId)
+                    .cafename(cafename)
+                    .stampCount(orders.size())
+                    .couponIssued(false)
+                    .build();
+            stamp.addStamps(0, couponRepository); // 초기 스탬프 추가
+        }
+        stampRepository.save(stamp);
+        CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문이 완료되었습니다");
         return ResponseEntity.ok(result);
     }
 }

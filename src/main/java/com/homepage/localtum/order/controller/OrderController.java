@@ -27,12 +27,12 @@ public class OrderController {
     private final AuthenticationMemberUtils memberUtils;
 
     // 상세화면 커피 주문 결제(장바구니 기반)
-    @PostMapping("/cafe_details/{cafe_name}/{menu_name}/order")
-    public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
+    @PostMapping("/cafe_details/{cafe_name}/{menu_name}/order_basket")
+    public ResponseEntity<CustomApiResponse<?>> createOrderWithBasket(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
                                                             @RequestBody AddCoupon dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         int des =dto.getCoupon();
-        ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename,menu_name,des);
+        ResponseEntity<CustomApiResponse<?>> result =orderService.createOrderWithBasket(currentMemberId,cafename,menu_name,des);
         return result;
     }
 
@@ -49,6 +49,14 @@ public class OrderController {
     public ResponseEntity<CustomApiResponse<?>> getAllOrders() {
         String currentMemberId = memberUtils.getCurrentMemberId();
         ResponseEntity<CustomApiResponse<?>> result = orderService.getAllOrders(currentMemberId);
+        return result;
+    }
+    @PostMapping("/cafe_details/{cafe_name}/{menu_name}/order")
+    public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
+                                                            @RequestBody AddCoupon dto,@RequestBody AddOrderDto dto2) {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        int des =dto.getCoupon();
+        ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename,menu_name,des,dto2);
         return result;
     }
 }
