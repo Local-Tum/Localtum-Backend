@@ -53,7 +53,7 @@ public class OrderController {
     }
     @PostMapping("/cafe_details/{cafe_name}/{menu_name}/order")
     public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
-                                                            @RequestBody AddCoupon dto,@RequestBody AddOrderDto dto2) {
+                                                            @RequestBody AddCoupon dto,@Valid @RequestBody AddOrderDto dto2) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         int des =dto.getCoupon();
         ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename,menu_name,des,dto2);
