@@ -13,11 +13,15 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AddOrderDto {
+
     @NotBlank
     private String size;
+
     @NotBlank
     private String status;
+
     private int prices;
+
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> options;
 }
