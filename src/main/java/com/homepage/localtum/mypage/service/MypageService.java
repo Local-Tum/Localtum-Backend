@@ -12,8 +12,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MypageService {
+
     private final MemberRepository memberRepository;
 
+    // 회원 정보 수정
     @Transactional
     public Member updateNickname(String memberId, String nickname) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
@@ -27,5 +29,6 @@ public class MypageService {
         return memberRepository.save(member);
     }
 
+    //
 
 }

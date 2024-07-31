@@ -95,4 +95,20 @@ public class OrderService {
         CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문 내역 조회 완료");
         return ResponseEntity.ok(result);
     }
+
+    public ResponseEntity<CustomApiResponse<?>> getAllOrders(String currentMemberId) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(currentMemberId);
+
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + currentMemberId + "인 회원은 존재하지 않습니다.");
+        }
+
+        List<Order> orders = orderRepository.findByMember(optionalMember.get().getNickname());
+        if (orders.isEmpty()) {
+            throw new RuntimeException("주문 내역이 없습니다.");
+        }
+
+        CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문 내역 조회 완료");
+        return ResponseEntity.ok(result);
+    }
 }

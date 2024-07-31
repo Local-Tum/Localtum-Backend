@@ -30,4 +30,6 @@ public class MypageController {
         CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), updatedNickname, "닉네임이 수정되었습니다.");
         return ResponseEntity.ok(response);
     }
+
+    // 주문내역 조회
 }
