@@ -22,18 +22,18 @@ public class CafeController {
     private final CafeService cafeService;
     private final AuthenticationMemberUtils memberUtils;
 
-    @Transactional
-    @PostMapping("/cafe_details")
-    public ResponseEntity<CustomApiResponse<?>> createCafe(@Valid @RequestBody CreateCafeDto dto){
-        ResponseEntity<CustomApiResponse<?>> result = cafeService.createCafe(dto);
-        return result;
-    }
-
-    @GetMapping("/cafe_details/{cafe_name}")
-    public ResponseEntity<CustomApiResponse<?>> getCafeById(@PathVariable("cafe_name") String cafeName){
-        ResponseEntity<CustomApiResponse<?>> result =cafeService.getCafeById(cafeName);
-        return result;
-    }
+//    @Transactional
+//    @PostMapping("/cafe_details")
+//    public ResponseEntity<CustomApiResponse<?>> createCafe(@Valid @RequestBody CreateCafeDto dto){
+//        ResponseEntity<CustomApiResponse<?>> result = cafeService.createCafe(dto);
+//        return result;
+//    }
+//
+//    @GetMapping("/cafe_details/{cafe_name}")
+//    public ResponseEntity<CustomApiResponse<?>> getCafeById(@PathVariable("cafe_name") String cafeName){
+//        ResponseEntity<CustomApiResponse<?>> result =cafeService.getCafeById(cafeName);
+//        return result;
+//    }
 
     @GetMapping("/search/like/list")
     public List<Cafe> getAllCafes() {

@@ -48,7 +48,7 @@ public class FavoriteController {
     }
 
     // 상세정보 - 즐겨찾기 등록
-    @PostMapping("/cafe_details/{cafe_name}/like")
+    @PostMapping("/cafe_details/{cafe_name}")
     public ResponseEntity<CustomApiResponse<Favorite>> addFavoriteCafe(@PathVariable("cafe_name") @RequestBody String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         Favorite favorite = favoriteService.addFavoriteCafe(currentMemberId, cafename);
@@ -57,7 +57,7 @@ public class FavoriteController {
     }
 
     // 상세정보 - 즐겨찾기 삭제
-    @DeleteMapping("/cafe_details/{cafe_name}/like")
+    @DeleteMapping("/cafe_details/{cafe_name}")
     public ResponseEntity<CustomApiResponse<String>> deleteFavoriteCafe(@PathVariable("cafe_name") String cafeName) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         favoriteService.deleteFavorite(currentMemberId, cafeName);
