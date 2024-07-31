@@ -12,7 +12,8 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class LocaltumApplication implements CommandLineRunner {
+public class LocaltumApplication  {
+//	implements CommandLineRunner
 
 	@Autowired
 	private CafeRepository cafeRepository;
@@ -21,21 +22,21 @@ public class LocaltumApplication implements CommandLineRunner {
 		SpringApplication.run(LocaltumApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		cafeRepository.save(Cafe.builder()
-				.name("에크하우스")
-				.menu(Arrays.asList("콜드브루", "카푸치노", "플랫화이트", "하우스 돌체", "카페라떼"))
-				.build());
-
-		cafeRepository.save(Cafe.builder()
-				.name("카페도킹")
-				.menu(Arrays.asList("아메리카노", "카페라떼", "로얄밀크티", "초코라떼"))
-				.build());
-
-		cafeRepository.save(Cafe.builder()
-				.name("C")
-				.menu(Arrays.asList("c1", "c2"))
-				.build());
-	}
+//	@Override
+//	public void run(String... args) throws Exception {
+//		cafeRepository.save(Cafe.builder()
+//				.name("에크하우스")
+//				.menu(Arrays.asList("콜드브루", "카푸치노", "플랫화이트", "하우스 돌체", "카페라떼"))
+//				.build());
+//
+//		cafeRepository.save(Cafe.builder()
+//				.name("카페도킹")
+//				.menu(Arrays.asList("아메리카노", "카페라떼", "로얄밀크티", "초코라떼"))
+//				.build());
+//
+//		cafeRepository.save(Cafe.builder()
+//				.name("C")
+//				.menu(Arrays.asList("c1", "c2"))
+//				.build());
+//	}
 }

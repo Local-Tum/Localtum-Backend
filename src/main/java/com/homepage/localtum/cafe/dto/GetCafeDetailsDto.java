@@ -10,10 +10,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GetCafeDetailsDto {
 
-
-
         private Long id;
         private String name;
         private List<String> menu;
-
 }
