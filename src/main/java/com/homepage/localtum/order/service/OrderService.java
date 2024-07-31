@@ -133,7 +133,7 @@ public class OrderService {
                 .member(member.getNickname())
                 .orderMenu(menuname)
                 .size(dto.getSize())
-                .options(new ArrayList<>(dto.getOptions()))
+                .options(dto.getOptions())
                 .status(dto.getStatus())
                 .prices(dto.getPrices() - des)
                 .cafename(cafename)
