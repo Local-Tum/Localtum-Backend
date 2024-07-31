@@ -20,9 +20,12 @@ import java.util.List;
 @RequestMapping("/localtum/cafe_details/{cafe_name}")
 @Builder
 public class OrderController {
+
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final AuthenticationMemberUtils memberUtils;
+
+    // 상세화면 커피 주문 결제(장바구니 기반)
     @PostMapping("/{menu_name}/order")
     public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
                                                             @RequestBody AddCoupon dto) {
@@ -31,6 +34,8 @@ public class OrderController {
         ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename,menu_name,des);
         return result;
     }
+
+    // 상세화면 - 방금 주문한 내역 보기
     @GetMapping("/{menu_name}/order_history")
     public ResponseEntity<CustomApiResponse<?>> getOrders(@PathVariable("cafe_name") String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
