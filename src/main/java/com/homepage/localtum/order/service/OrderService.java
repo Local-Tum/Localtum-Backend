@@ -20,25 +20,31 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+
     private final OrderRepository orderRepository;
     private final BasketRepository basketRepository;
     private final MemberRepository memberRepository;
     private final StampRepository stampRepository;
     private final CouponRepository couponRepository;
+
+    // 장바구니 주문
     public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename, String menuname, int des) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
         if (optionalMember.isEmpty()) {
-            throw new RuntimeException("아이디가 " + memberId + "인 회원은 존재하지 않습니다.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(CustomApiResponse.createFailWithoutData(HttpStatus.NOT_FOUND.value(), "아이디가 " + memberId + "인 회원은 존재하지 않습니다."));
         }
 
         Member member = optionalMember.get();
 
         // 회원의 장바구니 아이템을 모두 가져와서 주문으로 이동
-        List<Basket> baskets = basketRepository.findByMemberAndCafenameAndBasketMenu(member.getNickname(), cafename,menuname);
+        List<Basket> baskets = basketRepository.findByMemberAndCafenameAndBasketMenu(member.getNickname(), cafename, menuname);
         if (baskets.isEmpty()) {
-            throw new RuntimeException("주문할 장바구니 항목이 없습니다.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(CustomApiResponse.createFailWithoutData(HttpStatus.BAD_REQUEST.value(), "주문할 장바구니 항목이 없습니다."));
         }
+
         List<Order> orders = new ArrayList<>();
         for (Basket basket : baskets) {
             Order order = Order.builder()
@@ -47,10 +53,9 @@ public class OrderService {
                     .size(basket.getSize())
                     .options(new ArrayList<>(basket.getOptions()))
                     .status(basket.getStatus())
-                    .prices(basket.getPrices()-des)
+                    .prices(basket.getPrices() - des)
                     .cafename(basket.getCafename())
                     .build();
-
 
             Order savedOrder = orderRepository.save(order);
             orders.add(savedOrder);
@@ -58,12 +63,11 @@ public class OrderService {
 
         // 주문 후 장바구니 비우기
         basketRepository.deleteAll(baskets);
-        Optional<Stamp> optionalStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
 
         // 스탬프 관리
-        Optional<Stamp> optioStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
+        Optional<Stamp> optionalStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
         Stamp stamp;
-        if (optioStamp.isPresent()) {
+        if (optionalStamp.isPresent()) {
             stamp = optionalStamp.get();
             stamp.addStamps(orders.size(), couponRepository);
         } else {
@@ -76,9 +80,11 @@ public class OrderService {
             stamp.addStamps(0, couponRepository); // 초기 스탬프 추가
         }
         stampRepository.save(stamp);
-        CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(),orders,"주문이 완료되었습니다");
+
+        CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문이 완료되었습니다");
         return ResponseEntity.ok(result);
     }
+
 
     public ResponseEntity<CustomApiResponse<?>> getOrders(String memberId, String cafename) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
