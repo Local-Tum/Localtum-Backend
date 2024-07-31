@@ -4,6 +4,7 @@ import com.homepage.localtum.cafe.repository.CafeRepository;
 import com.homepage.localtum.domain.Order;
 import com.homepage.localtum.order.dto.AddCoupon;
 import com.homepage.localtum.order.dto.AddOrderDto;
+import com.homepage.localtum.order.dto.OrderRequset;
 import com.homepage.localtum.order.repository.OrderRepository;
 import com.homepage.localtum.order.service.OrderService;
 import com.homepage.localtum.util.Member.AuthenticationMemberUtils;
@@ -52,10 +53,11 @@ public class OrderController {
         return result;
     }
     @PostMapping("/cafe_details/{cafe_name}/{menu_name}/order")
-    public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
-                                                            @RequestBody AddCoupon dto,@Valid @RequestBody AddOrderDto dto2) {
+    public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename, @PathVariable("menu_name") String menu_name,
+                                                            @RequestBody OrderRequset dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        int des =dto.getCoupon();
+        int des =dto.getCoupon().getCoupon();
+        AddOrderDto dto2=dto.getOrder();
         ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename,menu_name,des,dto2);
         return result;
     }

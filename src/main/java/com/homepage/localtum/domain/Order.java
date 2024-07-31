@@ -23,6 +23,7 @@ public class Order {
 
     @Column(name = "price", nullable = false)
     private int prices;
+
     private String member;
 
     private String size;
