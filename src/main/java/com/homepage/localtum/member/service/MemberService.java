@@ -28,11 +28,12 @@ public class MemberService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public String signUp(SignUpDto dto) {
+    public ResponseEntity<CustomApiResponse<?>> signUp(SignUpDto dto) {
 
         Optional<Member> optionalUser = memberRepository.findByMemberId(dto.getMemberId());
         if (optionalUser.isPresent()) {
-            throw new RuntimeException("이미 존재하는 아이디입니다.");
+            CustomApiResponse<?> response = CustomApiResponse.createFailWithout(HttpStatus.BAD_REQUEST.value(), "중복되는 아이디가 존재합니다");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
         List<Role> roles = dto.getMemberRoles().stream()
@@ -45,8 +46,8 @@ public class MemberService {
 
         // 디버깅용 코드
         member.getMemberRoles().forEach(memberRole -> System.out.println("Saved role for ,member: " + memberRole.getRole().getRoleName()));
-
-        return "회원가입에 성공했습니다.";
+        CustomApiResponse<?> response=CustomApiResponse.createSuccess(HttpStatus.OK.value(), null,"회원가입에 성공하였습니다");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     public ResponseEntity<CustomApiResponse<?>> signIn(SignInReqDto dto) {

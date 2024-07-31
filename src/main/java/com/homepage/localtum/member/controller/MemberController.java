@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
     private final MemberService memberService;
     @PostMapping("/signUp")
-    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDto dto) {
-        String result = memberService.signUp(dto);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<CustomApiResponse<?>> signUp(@RequestBody @Valid SignUpDto dto) {
+        ResponseEntity<CustomApiResponse<?>> result = memberService.signUp(dto);
+        return result;
     }
 
     @PostMapping("/signIn")
