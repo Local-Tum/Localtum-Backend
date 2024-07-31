@@ -1,6 +1,7 @@
 package com.homepage.localtum.order.controller;
 
 import com.homepage.localtum.cafe.repository.CafeRepository;
+import com.homepage.localtum.domain.Order;
 import com.homepage.localtum.order.dto.AddCoupon;
 import com.homepage.localtum.order.dto.AddOrderDto;
 import com.homepage.localtum.order.repository.OrderRepository;
@@ -17,13 +18,16 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/localtum/cafe_details/{cafe_name}")
+@RequestMapping("/localtum")
 @Builder
 public class OrderController {
+
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final AuthenticationMemberUtils memberUtils;
-    @PostMapping("/{menu_name}/order")
+
+    // 상세화면 커피 주문 결제(장바구니 기반)
+    @PostMapping("/cafe_details/{cafe_name}/{menu_name}/order")
     public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
                                                             @RequestBody AddCoupon dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
@@ -31,10 +35,20 @@ public class OrderController {
         ResponseEntity<CustomApiResponse<?>> result =orderService.createOrder(currentMemberId,cafename,menu_name,des);
         return result;
     }
-    @GetMapping("/{menu_name}/order_history")
+
+    // 상세화면 - 방금 주문한 내역 보기
+    @GetMapping("/cafe_details/{cafe_name}/{menu_name}/order_history")
     public ResponseEntity<CustomApiResponse<?>> getOrders(@PathVariable("cafe_name") String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         ResponseEntity<CustomApiResponse<?>> result = orderService.getOrders(currentMemberId, cafename);
+        return result;
+    }
+
+    // 주문내역 - 주문내역 조회
+    @GetMapping("order_list")
+    public ResponseEntity<CustomApiResponse<?>> getAllOrders() {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        ResponseEntity<CustomApiResponse<?>> result = orderService.getAllOrders(currentMemberId);
         return result;
     }
 }
