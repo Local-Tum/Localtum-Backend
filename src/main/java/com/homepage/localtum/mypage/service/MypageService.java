@@ -47,4 +47,18 @@ public class MypageService {
         return ResponseEntity.ok(response);
     }
 
+    // 닉네임 조회
+    public ResponseEntity<CustomApiResponse<String>> getNickname(String currentMemberId) {
+        Optional<Member> optionalMember = memberRepository.findByMemberId(currentMemberId);
+
+        if (optionalMember.isEmpty()) {
+            throw new RuntimeException("아이디가 " + currentMemberId + "인 회원은 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+        String nickname = member.getNickname();
+
+        CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), nickname, "닉네임 조회 완료");
+        return ResponseEntity.ok(response);
+    }
 }
