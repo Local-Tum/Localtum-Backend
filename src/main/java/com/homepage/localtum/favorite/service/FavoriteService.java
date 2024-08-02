@@ -28,10 +28,16 @@ public class FavoriteService {
 
         Member member = optionalMember.get();
 
+        // 즐겨찾기 존재 여부 확인
+        Optional<Favorite> existingFavorite = favoriteRepository.findByUserNameAndCafeName(member.getNickname(), cafeName);
+        if (existingFavorite.isPresent()) {
+            throw new RuntimeException(cafeName + "는 이미 즐겨찾기에 등록되어 있습니다.");
+        }
+
         Favorite favorite = Favorite.builder()
                 .userName(member.getNickname())
                 .cafeName(cafeName)
-                .source("search")  // Mark as added from search
+                .source("search")  // 검색을 통해 추가된 것으로 표시
                 .build();
         return favoriteRepository.save(favorite);
     }
