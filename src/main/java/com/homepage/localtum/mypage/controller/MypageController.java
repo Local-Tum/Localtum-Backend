@@ -21,7 +21,7 @@ public class MypageController {
     private final MypageService mypageService;
     private final AuthenticationMemberUtils memberUtils;
 
-    // 회원 정보 수정
+    // 회원 닉네임 수정
     @PutMapping("/user")
     public ResponseEntity<CustomApiResponse<String>> updateNickname(@RequestBody UpdateNicknameDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
@@ -30,6 +30,14 @@ public class MypageController {
         CustomApiResponse<String> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), updatedNickname, "닉네임이 수정되었습니다.");
         return ResponseEntity.ok(response);
     }
+
+    // 회원 닉네임 조회
+    @GetMapping("/user")
+    public ResponseEntity<CustomApiResponse<String>> getNickname() {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        return mypageService.getNickname(currentMemberId);
+    }
+
 
     // 전체 스탬프 조회
     @GetMapping("/stamp")
