@@ -35,4 +35,10 @@ public class Order extends BaseEntity {
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> options;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    @Enumerated(EnumType.STRING)
+    private PickupStatus pickupStatus;
 }
