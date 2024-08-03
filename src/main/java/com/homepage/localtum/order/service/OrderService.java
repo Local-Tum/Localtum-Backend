@@ -116,7 +116,7 @@ public class OrderService {
             throw new RuntimeException("아이디가 " + currentMemberId + "인 회원은 존재하지 않습니다.");
         }
 
-        List<Order> orders = orderRepository.findByMember(optionalMember.get().getNickname());
+        List<Order> orders = orderRepository.findByMember(optionalMember.get().getMemberId());
         if (orders.isEmpty()) {
             throw new RuntimeException("주문 내역이 없습니다.");
         }
