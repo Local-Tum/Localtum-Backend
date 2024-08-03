@@ -54,6 +54,8 @@ public class OrderService {
                     .size(basket.getSize())
                     .options(new ArrayList<>(basket.getOptions()))
                     .status(basket.getStatus())
+                    .orderStatus(OrderStatus.PREPARE)  // OrderStatus를 PREPARE로 설정
+                    .pickupStatus(PickupStatus.WAIT)  // PickupStatus를 WAIT로 설정
                     .prices(basket.getPrices() - des)
                     .cafename(basket.getCafename())
                     .build();
@@ -103,6 +105,7 @@ public class OrderService {
         return ResponseEntity.ok(result);
     }
 
+    // 주문내역 조회 - 주문내역 조회
     public ResponseEntity<CustomApiResponse<?>> getAllOrders(String currentMemberId) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(currentMemberId);
 
@@ -119,6 +122,7 @@ public class OrderService {
         return ResponseEntity.ok(result);
     }
 
+    // 주문
     public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename, String menuname, int des, AddOrderDto dto) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
@@ -134,12 +138,15 @@ public class OrderService {
                 .orderMenu(menuname)
                 .size(dto.getSize())
                 .options(dto.getOptions())
-                .status(dto.getStatus())
+                .orderStatus(OrderStatus.PREPARE)  // OrderStatus를 PREPARE로 설정
+                .pickupStatus(PickupStatus.WAIT)  // PickupStatus를 WAIT로 설정
                 .prices(dto.getPrices() - des)
                 .cafename(cafename)
                 .build();
         Order savedOrder = orderRepository.save(order);
         orders.add(savedOrder);
+
+        // 스탬프 관리
         Optional<Stamp> optionalStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
         Stamp stamp;
         if (optionalStamp.isPresent()) {
@@ -155,6 +162,7 @@ public class OrderService {
             stamp.addStamps(0, couponRepository); // 초기 스탬프 추가
         }
         stampRepository.save(stamp);
+
         CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문이 완료되었습니다");
         return ResponseEntity.ok(result);
     }

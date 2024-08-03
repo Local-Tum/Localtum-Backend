@@ -1,5 +1,6 @@
 package com.homepage.localtum.domain;
 
+import com.homepage.localtum.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.web.bind.annotation.Mapping;
@@ -12,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,4 +35,10 @@ public class Order {
 
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> options;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    @Enumerated(EnumType.STRING)
+    private PickupStatus pickupStatus;
 }

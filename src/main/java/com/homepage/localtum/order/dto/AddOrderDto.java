@@ -21,7 +21,9 @@ public class AddOrderDto {
     private String status;
 
     private int prices;
+
     private int coupon;
+
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> options;
 }
