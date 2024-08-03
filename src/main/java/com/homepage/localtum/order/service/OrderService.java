@@ -119,6 +119,7 @@ public class OrderService {
         return ResponseEntity.ok(result);
     }
 
+    // 주문
     public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename, String menuname, int des, AddOrderDto dto) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
