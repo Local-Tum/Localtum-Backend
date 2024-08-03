@@ -138,6 +138,7 @@ public class OrderService {
                 .orderMenu(menuname)
                 .size(dto.getSize())
                 .options(dto.getOptions())
+                .status(dto.getStatus())
                 .orderStatus(OrderStatus.PREPARE)  // OrderStatus를 PREPARE로 설정
                 .pickupStatus(PickupStatus.WAIT)  // PickupStatus를 WAIT로 설정
                 .prices(dto.getPrices() - des)
