@@ -39,9 +39,9 @@ public class OrderController {
 
     // 상세화면 - 방금 주문한 내역 보기
     @GetMapping("/cafe_details/{cafe_name}/{menu_name}/order_history")
-    public ResponseEntity<CustomApiResponse<?>> getOrders(@PathVariable("cafe_name") String cafename) {
+    public ResponseEntity<CustomApiResponse<?>> getOneOrder(@PathVariable("cafe_name") String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        ResponseEntity<CustomApiResponse<?>> result = orderService.getOrders(currentMemberId, cafename);
+        ResponseEntity<CustomApiResponse<?>> result = orderService.getOneOrder(currentMemberId, cafename);
         return result;
     }
 

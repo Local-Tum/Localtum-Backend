@@ -88,8 +88,8 @@ public class OrderService {
         return ResponseEntity.ok(result);
     }
 
-
-    public ResponseEntity<CustomApiResponse<?>> getOrders(String memberId, String cafename) {
+    // 상세화면 - 방금 주문한 내역 조회
+    public ResponseEntity<CustomApiResponse<?>> getOneOrder(String memberId, String cafename) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
         if (optionalMember.isEmpty()) {
@@ -101,7 +101,10 @@ public class OrderService {
             throw new RuntimeException("주문 내역이 없습니다.");
         }
 
-        CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문 내역 조회 완료");
+        // 최근 주문 내역만 반환
+        Order latestOrder = orders.get(orders.size() - 1);
+
+        CustomApiResponse<Order> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), latestOrder, "최근 주문 내역 조회 완료");
         return ResponseEntity.ok(result);
     }
 
