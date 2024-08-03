@@ -39,9 +39,9 @@ public class MypageService {
     // 스탬프 목록 조회
     public ResponseEntity<CustomApiResponse<List<Stamp>>> getStampList(String currentMemberId) {
         List<Stamp> stamps = stampRepository.findByMemberId(currentMemberId);
-        if (stamps.isEmpty()) {
-            throw new RuntimeException("스탬프 내역이 없습니다.");
-        }
+//        if (stamps.isEmpty()) {
+//            throw new RuntimeException("스탬프 내역이 없습니다.");
+//        }
 
         CustomApiResponse<List<Stamp>> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(), stamps, "스탬프 내역 조회 완료");
         return ResponseEntity.ok(response);
