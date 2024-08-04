@@ -117,9 +117,9 @@ public class OrderService {
         }
 
         List<Order> orders = orderRepository.findByMember(optionalMember.get().getNickname());
-        if (orders.isEmpty()) {
-            throw new RuntimeException("주문 내역이 없습니다.");
-        }
+//        if (orders.isEmpty()) {
+//            throw new RuntimeException("주문 내역이 없습니다.");
+//        }
 
         CustomApiResponse<List<Order>> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), orders, "주문 내역 조회 완료");
         return ResponseEntity.ok(result);
