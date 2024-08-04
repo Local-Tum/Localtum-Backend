@@ -38,7 +38,7 @@ public class OrderController {
     }
 
     // 상세화면 - 방금 주문한 내역 보기
-    @GetMapping("/cafe_details/{cafe_name}/{menu_name}/order_history")
+    @GetMapping("/cafe_details/{cafe_name}/order_history")
     public ResponseEntity<CustomApiResponse<?>> getOneOrder(@PathVariable("cafe_name") String cafename) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         ResponseEntity<CustomApiResponse<?>> result = orderService.getOneOrder(currentMemberId, cafename);
@@ -52,6 +52,7 @@ public class OrderController {
         ResponseEntity<CustomApiResponse<?>> result = orderService.getAllOrders(currentMemberId);
         return result;
     }
+
     @PostMapping("/cafe_details/{cafe_name}/{menu_name}/order")
     public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename, @PathVariable("menu_name") String menu_name,
                                                             @RequestBody AddOrderDto dto) {
