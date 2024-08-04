@@ -4,7 +4,6 @@ import com.homepage.localtum.basket.repository.BasketRepository;
 import com.homepage.localtum.coupon.repository.CouponRepository;
 import com.homepage.localtum.domain.*;
 import com.homepage.localtum.member.repository.MemberRepository;
-import com.homepage.localtum.order.dto.AddCoupon;
 import com.homepage.localtum.order.dto.AddOrderDto;
 import com.homepage.localtum.order.repository.OrderRepository;
 import com.homepage.localtum.stamp.StampRepository;
@@ -96,13 +95,13 @@ public class OrderService {
             throw new RuntimeException("아이디가 " + memberId + "인 회원은 존재하지 않습니다.");
         }
 
-        List<Order> orders = orderRepository.findByMemberAndCafename(optionalMember.get().getNickname(), cafename);
+        List<Order> orders = orderRepository.findLatestOrder(optionalMember.get().getNickname(), cafename);
         if (orders.isEmpty()) {
             throw new RuntimeException("주문 내역이 없습니다.");
         }
 
         // 최근 주문 내역만 반환
-        Order latestOrder = orders.get(orders.size() - 1);
+        Order latestOrder = orders.get(0);
 
         CustomApiResponse<Order> result = CustomApiResponse.createSuccess(HttpStatus.OK.value(), latestOrder, "최근 주문 내역 조회 완료");
         return ResponseEntity.ok(result);
