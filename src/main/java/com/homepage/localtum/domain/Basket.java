@@ -21,7 +21,7 @@ public class Basket {
 
     @Column(name = "price", nullable = false)
     private int prices;
-
+    private String memberId;
     private String member;
     private String size;
     private String status;

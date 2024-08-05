@@ -22,11 +22,20 @@ public class BasketController {
     private final BasketRepository basketRepository;
     private final BasketService basketService;
     private final AuthenticationMemberUtils memberUtils;
+
     @PostMapping("/{menu_name}")
     public ResponseEntity<CustomApiResponse<?>> createOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
                                                             @Valid @RequestBody AddbasketDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
         ResponseEntity<CustomApiResponse<?>> result =basketService.createBasket(currentMemberId,cafename,menu_name,dto);
+        return result;
+    }
+
+    //장바구니 비우기
+    @DeleteMapping("/{menu_name}")
+    public ResponseEntity<CustomApiResponse<?>> deleteOrder(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name) {
+        String currentMemberId = memberUtils.getCurrentMemberId();
+        ResponseEntity<CustomApiResponse<?>> result =basketService.deleteBakset(currentMemberId,cafename,menu_name);
         return result;
     }
 }
