@@ -37,7 +37,17 @@ public class OrderService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(CustomApiResponse.createFailWithoutData(HttpStatus.NOT_FOUND.value(), "아이디가 " + memberId + "인 회원은 존재하지 않습니다."));
         }
-
+        Optional<Coupon> optionalCoupon= Optional.ofNullable(couponRepository.findByCouponName(dto.getCouponName()));
+        if (optionalCoupon.isPresent()) {
+            Coupon coupon = optionalCoupon.get();
+            coupon.setCouponStatus(CouponStatus.USED);
+            System.out.println("변동완료");
+            couponRepository.flush();  // 플러쉬하여 즉시 적용
+            couponRepository.save(coupon);
+        } else {
+            dto.setCoupon(0);
+            System.out.println("변동안됨");
+        }
         Member member = optionalMember.get();
 
         // 회원의 장바구니 아이템을 모두 가져와서 주문으로 이동
