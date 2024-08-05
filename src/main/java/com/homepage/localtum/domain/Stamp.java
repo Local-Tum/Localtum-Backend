@@ -32,7 +32,7 @@ public class Stamp {
         if (this.stampCount >= 10 && !this.couponIssued) {
             // 쿠폰 생성
             Coupon coupon = Coupon.builder()
-                    .memberName(this.memberId)
+                    .memberId(this.memberId)
                     .cafe_name(this.cafename)
                     .Coupon_description(500)
                     .build();
