@@ -1,6 +1,7 @@
 package com.homepage.localtum.order.controller;
 
 import com.homepage.localtum.cafe.repository.CafeRepository;
+import com.homepage.localtum.coupon.repository.CouponRepository;
 import com.homepage.localtum.domain.Order;
 import com.homepage.localtum.order.dto.AddCoupon;
 import com.homepage.localtum.order.dto.AddOrderDto;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/localtum")
 @Builder
 public class OrderController {
-
+    private final CouponRepository couponRepository;
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final AuthenticationMemberUtils memberUtils;
@@ -32,8 +33,8 @@ public class OrderController {
     public ResponseEntity<CustomApiResponse<?>> createOrderWithBasket(@PathVariable("cafe_name") String cafename,@PathVariable("menu_name") String menu_name,
                                                             @RequestBody AddCoupon dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        int des =dto.getCoupon();
-        ResponseEntity<CustomApiResponse<?>> result =orderService.createOrderWithBasket(currentMemberId,cafename,menu_name,des);
+
+        ResponseEntity<CustomApiResponse<?>> result =orderService.createOrderWithBasket(currentMemberId,cafename,menu_name,dto);
         return result;
     }
 

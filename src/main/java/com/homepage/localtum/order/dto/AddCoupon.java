@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddCoupon {
+    private String couponName;
     private int coupon;
 }

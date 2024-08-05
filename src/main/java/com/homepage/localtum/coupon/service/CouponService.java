@@ -1,7 +1,9 @@
 package com.homepage.localtum.coupon.service;
 
+import com.homepage.localtum.coupon.dto.AddCouponDto;
 import com.homepage.localtum.coupon.repository.CouponRepository;
 import com.homepage.localtum.domain.Coupon;
+import com.homepage.localtum.domain.CouponStatus;
 import com.homepage.localtum.domain.Member;
 import com.homepage.localtum.member.repository.MemberRepository;
 import com.homepage.localtum.util.response.CustomApiResponse;
@@ -19,7 +21,7 @@ public class CouponService {
     private final CouponRepository couponRepository;
     private final MemberRepository memberRepository;
 
-    public Coupon addCoupon(String memberId, String cafename, int description) {
+    public Coupon addCoupon(String memberId, String cafename, AddCouponDto dto) {
 
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
@@ -33,7 +35,9 @@ public class CouponService {
                 .cafe_name(cafename)
                 .memberId(member.getMemberId())
                 .memberName(member.getNickname())
-                .Coupon_description(description)
+                .Coupon_description(dto.getDescription())
+                .couponName(dto.getCouponname())
+                .couponStatus(CouponStatus.UNUSED)
                 .build();
         return couponRepository.save(coupon1);
     }

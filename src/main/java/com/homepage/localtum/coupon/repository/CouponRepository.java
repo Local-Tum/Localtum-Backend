@@ -11,4 +11,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
     List<Coupon> findBymemberName(String nickname);
 
     List<Coupon> findBymemberId(String memberId);
+
+    Coupon findByCouponName(String couponName);
 }

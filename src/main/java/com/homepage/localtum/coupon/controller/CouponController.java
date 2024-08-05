@@ -25,7 +25,7 @@ public class CouponController {
     @PostMapping("/{cafe_name}/coupon")
     public ResponseEntity<CustomApiResponse<?>> createCoupon(@PathVariable("cafe_name") String cafename, @RequestBody AddCouponDto dto) {
         String currentMemberId = memberUtils.getCurrentMemberId();
-        Coupon coupon = couponService.addCoupon(currentMemberId,cafename, dto.getDescription());
+        Coupon coupon = couponService.addCoupon(currentMemberId,cafename, dto);
         CustomApiResponse<Coupon> response = CustomApiResponse.createSuccess(HttpStatus.OK.value(),coupon,"쿠폰이 적립되었습니다");
         return ResponseEntity.ok().body(response);
     }

@@ -4,10 +4,12 @@ import com.homepage.localtum.basket.repository.BasketRepository;
 import com.homepage.localtum.coupon.repository.CouponRepository;
 import com.homepage.localtum.domain.*;
 import com.homepage.localtum.member.repository.MemberRepository;
+import com.homepage.localtum.order.dto.AddCoupon;
 import com.homepage.localtum.order.dto.AddOrderDto;
 import com.homepage.localtum.order.repository.OrderRepository;
 import com.homepage.localtum.stamp.StampRepository;
 import com.homepage.localtum.util.response.CustomApiResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,7 @@ public class OrderService {
     private final CouponRepository couponRepository;
 
     // 장바구니 주문
-    public ResponseEntity<CustomApiResponse<?>> createOrderWithBasket(String memberId, String cafename, String menuname, int des) {
+    public ResponseEntity<CustomApiResponse<?>> createOrderWithBasket(String memberId, String cafename, String menuname, AddCoupon dto) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
         if (optionalMember.isEmpty()) {
@@ -45,6 +47,18 @@ public class OrderService {
                     .body(CustomApiResponse.createFailWithoutData(HttpStatus.BAD_REQUEST.value(), "주문할 장바구니 항목이 없습니다."));
         }
 
+        Coupon coupon = couponRepository.findByCouponName(dto.getCouponName());
+
+        if (coupon == null) {
+            dto.setCoupon(0);
+        }
+        else{
+            Coupon sta = Coupon.builder()
+                    .couponStatus(CouponStatus.USED)
+                    .build();
+            couponRepository.save(sta);
+        }
+
         List<Order> orders = new ArrayList<>();
         for (Basket basket : baskets) {
             Order order = Order.builder()
@@ -55,7 +69,7 @@ public class OrderService {
                     .status(basket.getStatus())
                     .orderStatus(OrderStatus.PREPARE)  // OrderStatus를 PREPARE로 설정
                     .pickupStatus(PickupStatus.WAIT)  // PickupStatus를 WAIT로 설정
-                    .prices(basket.getPrices() - des)
+                    .prices(basket.getPrices() - dto.getCoupon())
                     .cafename(basket.getCafename())
                     .build();
 
@@ -63,12 +77,15 @@ public class OrderService {
             orders.add(savedOrder);
         }
 
+
+
         // 주문 후 장바구니 비우기
         basketRepository.deleteAll(baskets);
 
         // 스탬프 관리
         Optional<Stamp> optionalStamp = stampRepository.findByMemberIdAndCafename(memberId, cafename);
         Stamp stamp;
+
         if (optionalStamp.isPresent()) {
             stamp = optionalStamp.get();
             stamp.addStamps(orders.size(), couponRepository);
@@ -125,6 +142,7 @@ public class OrderService {
     }
 
     // 주문
+    @Transactional
     public ResponseEntity<CustomApiResponse<?>> createOrder(String memberId, String cafename, String menuname, int des, AddOrderDto dto) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
@@ -132,7 +150,17 @@ public class OrderService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(CustomApiResponse.createFailWithoutData(HttpStatus.NOT_FOUND.value(), "아이디가 " + memberId + "인 회원은 존재하지 않습니다."));
         }
-
+       Optional<Coupon> optionalCoupon= Optional.ofNullable(couponRepository.findByCouponName(dto.getCouponName()));
+        if (optionalCoupon.isPresent()) {
+            Coupon coupon = optionalCoupon.get();
+            coupon.setCouponStatus(CouponStatus.USED);
+            System.out.println("변동완료");
+            couponRepository.flush();  // 플러쉬하여 즉시 적용
+            couponRepository.save(coupon);
+        } else {
+            dto.setCoupon(0);
+            System.out.println("변동안됨");
+        }
         Member member = optionalMember.get();
         List<Order> orders = new ArrayList<>();
         Order order = Order.builder()
@@ -143,7 +171,7 @@ public class OrderService {
                 .status(dto.getStatus())
                 .orderStatus(OrderStatus.PREPARE)  // OrderStatus를 PREPARE로 설정
                 .pickupStatus(PickupStatus.WAIT)  // PickupStatus를 WAIT로 설정
-                .prices(dto.getPrices() - des)
+                .prices(dto.getPrices() - dto.getCoupon())
                 .cafename(cafename)
                 .build();
         Order savedOrder = orderRepository.save(order);

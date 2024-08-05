@@ -23,7 +23,7 @@ public class AddOrderDto {
     private int prices;
 
     private int coupon;
-
+    private String couponName;
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> options;
 }
