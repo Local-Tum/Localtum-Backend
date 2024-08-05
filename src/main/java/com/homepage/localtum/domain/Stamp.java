@@ -33,8 +33,8 @@ public class Stamp {
             // 쿠폰 생성
             Coupon coupon = Coupon.builder()
                     .memberId(this.memberId)
-                    .cafe_name(this.cafename)
-                    .Coupon_description(500)
+                    .cafeName(this.cafename)
+                    .couponDescription(500)
                     .build();
             couponRepository.save(coupon);
 

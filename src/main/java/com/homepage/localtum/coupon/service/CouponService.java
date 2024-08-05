@@ -32,10 +32,10 @@ public class CouponService {
         Member member = optionalMember.get();
 
         Coupon coupon1 =Coupon.builder()
-                .cafe_name(cafename)
+                .cafeName(cafename)
                 .memberId(member.getMemberId())
                 .memberName(member.getNickname())
-                .Coupon_description(dto.getDescription())
+                .couponDescription(dto.getDescription())
                 .couponName(dto.getCouponname())
                 .couponStatus(CouponStatus.UNUSED)
                 .build();

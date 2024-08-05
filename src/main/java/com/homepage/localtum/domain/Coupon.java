@@ -4,6 +4,9 @@ import com.homepage.localtum.util.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @Entity
 @Table(name = "COPUONS")
 @Getter
@@ -15,15 +18,35 @@ public class Coupon extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cafe_name;
-    private int Coupon_description;
+
+    @Column(name = "cafe_name")
+    private String cafeName;
+
+    @Column(name = "coupon_description")
+    private int couponDescription;
+
+    @Column(name = "member_id")
     private String memberId;
+
+    @Column(name = "member_name")
     private String memberName;
+
+    @Column(name = "coupon_name")
     private String couponName;
+
+    @Setter
     @Enumerated(EnumType.STRING)
+    @Column(name = "coupon_status")
     private CouponStatus couponStatus;
 
-    public void setCouponStatus(CouponStatus couponStatus) {
-        this.couponStatus = couponStatus;
+    @Column(name = "expiration_date")
+    private LocalDateTime expirationDate;
+
+    @PrePersist
+    public void setExpirationDate() {
+        if (getCreatedAt() != null) {
+            this.expirationDate = getCreatedAt().plus(1, ChronoUnit.MONTHS);
+        }
     }
+
 }
