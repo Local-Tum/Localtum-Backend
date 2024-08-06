@@ -30,6 +30,7 @@ public class OrderService {
     private final CouponRepository couponRepository;
 
     // 장바구니 주문
+    @Transactional
     public ResponseEntity<CustomApiResponse<?>> createOrderWithBasket(String memberId, String cafename, String menuname, AddCoupon dto) {
         Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
 
@@ -57,17 +58,9 @@ public class OrderService {
                     .body(CustomApiResponse.createFailWithoutData(HttpStatus.BAD_REQUEST.value(), "주문할 장바구니 항목이 없습니다."));
         }
 
-        Coupon coupon = couponRepository.findByCouponName(dto.getCouponName());
 
-        if (coupon == null) {
-            dto.setCoupon(0);
-        }
-        else{
-            Coupon sta = Coupon.builder()
-                    .couponStatus(CouponStatus.USED)
-                    .build();
-            couponRepository.save(sta);
-        }
+
+
 
         List<Order> orders = new ArrayList<>();
         for (Basket basket : baskets) {
