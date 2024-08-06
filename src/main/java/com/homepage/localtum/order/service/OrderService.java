@@ -186,14 +186,17 @@ public class OrderService {
         if (optionalStamp.isPresent()) {
             stamp = optionalStamp.get();
             stamp.addStamps(orders.size(), couponRepository);
+
         } else {
             stamp = Stamp.builder()
                     .memberId(memberId)
                     .cafename(cafename)
                     .stampCount(orders.size())
+                    .couponCount(0)
                     .couponIssued(false)
                     .build();
-            stamp.addStamps(0, couponRepository); // 초기 스탬프 추가
+            stamp.addStamps(0, couponRepository);
+           // 초기 스탬프 추가
         }
         stampRepository.save(stamp);
 

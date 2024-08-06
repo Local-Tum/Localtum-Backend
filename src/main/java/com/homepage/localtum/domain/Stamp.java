@@ -1,6 +1,7 @@
 package com.homepage.localtum.domain;
 
 import com.homepage.localtum.coupon.repository.CouponRepository;
+import com.homepage.localtum.order.repository.OrderRepository;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,22 +25,26 @@ public class Stamp {
 
     @Column(name = "is_coupon_issued", nullable = false)
     private boolean couponIssued;
+    private int i;
+    @Column(name = "coupon_count", nullable = false)
+    private int couponCount;
     // 스탬프를 추가하고 쿠폰을 발급할지 결정하는 메소드
+
     public void addStamps(int count, CouponRepository couponRepository) {
         this.stampCount += count;
-
-        // 쿠폰 발급 조건 확인
-        if (this.stampCount >= 10 && !this.couponIssued) {
-            // 쿠폰 생성
+        while (this.stampCount >= 10) {
+            this.stampCount -= 10;
             Coupon coupon = Coupon.builder()
                     .memberId(this.memberId)
                     .cafeName(this.cafename)
                     .couponDescription(500)
+                    .couponStatus(CouponStatus.UNUSED)
+                    .couponName(this.cafename + (this.couponCount + 1))
                     .build();
             couponRepository.save(coupon);
-
-            // 쿠폰 발급 표시
-            this.couponIssued = true;
+            i+=1;
+            this.couponCount += 1;
         }
     }
+
 }
