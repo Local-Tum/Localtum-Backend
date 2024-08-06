@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class AddCouponDto {
-    private String couponname;
+    private String couponName;
     private int description;
 }

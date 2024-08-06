@@ -36,7 +36,7 @@ public class CouponService {
                 .memberId(member.getMemberId())
                 .memberName(member.getNickname())
                 .couponDescription(dto.getDescription())
-                .couponName(dto.getCouponname())
+                .couponName(dto.getCouponName())
                 .couponStatus(CouponStatus.UNUSED)
                 .build();
         return couponRepository.save(coupon1);
