@@ -1,4 +1,7 @@
 # Localtum-Backend
+
+![localtum](https://github.com/user-attachments/assets/90da3e48-bc64-4b6c-85e2-def73ba6e51f)
+
 ### ✅ Commit Convention
 
 | 태그 이름      | 설명 |
